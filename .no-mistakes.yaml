@@ -1,0 +1,11 @@
+# no-mistakes gate config for jarvis-dashboard.
+# No test or lint script exists yet (see package.json under companion/ and
+# macos/), so "clean" is defined as compile-only: syntax-check every JS file
+# under companion/ and macos/ with Node's built-in parser (`node --check`),
+# excluding node_modules and Tauri's generated gen/ output. This deliberately
+# does NOT attempt a full `npm run build` of macos/ - that's a Tauri 2.0
+# macOS app requiring Xcode/Rust toolchains this Windows machine doesn't have
+# and isn't a fair "does it compile" bar for a repo authored cross-platform.
+# Tighten this (real build/test/lint) once that exists.
+commands:
+  test: "find companion macos -name '*.js' -not -path '*/node_modules/*' -not -path '*/gen/*' -exec node --check {} \\;"
